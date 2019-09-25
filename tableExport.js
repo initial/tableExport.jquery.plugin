@@ -259,7 +259,7 @@ THE SOFTWARE.*/
 					excelFile += "<x:ExcelWorksheets>";
 					excelFile += "<x:ExcelWorksheet>";
 					excelFile += "<x:Name>";
-					excelFile += "{worksheet}";
+					excelFile += options.tableName;
 					excelFile += "</x:Name>";
 					excelFile += "<x:WorksheetOptions>";
 					excelFile += "<x:DisplayGridlines/>";
@@ -276,8 +276,22 @@ THE SOFTWARE.*/
 					excelFile += "</html>";
 
 					var base64data = "base64," + $.base64.encode(excelFile);
-					window.open('data:application/vnd.ms-'+defaults.type+';filename=exportData.doc;' + base64data);
-					
+					//window.open('data:application/vnd.ms-'+defaults.type+';filename=exportData.doc;' + base64data);
+					 if(defaults.type == 'excel' )
+					    //window.open('data:application/vnd.ms-'+defaults.type+';filename='+defaults.tableName+'.xls;' + base64data);
+				    $('<a style="display:none" href="data:application/vnd.ms-'+defaults.type+';filename=exportData.doc;'+base64data
+				        +'" download="'+defaults.tableName.toString()+'.xls"><span></span></a>').appendTo(document.body).find('span').trigger("click").parent().remove();
+
+				    if(defaults.type == 'doc')
+				       // window.open('data:application/vnd.ms-'+defaults.type+';filename='+options.tableName+'.doc;' + base64data);
+				        $('<a style="display:none" href="data:application/vnd.ms-'+defaults.type+';filename=exportData.doc;'+base64data
+				            +'" download="'+defaults.tableName.toString()+'.doc"><span></span></a>').appendTo(document.body).find('span').trigger("click").parent().remove();
+
+				    if(defaults.type == 'powerpoint' )
+				        //window.open('data:application/vnd.ms-'+defaults.type+';filename='+options.tableName+'.ppt;' + base64data);
+				        $('<a style="display:none" href="data:application/vnd.ms-'+defaults.type+';filename=exportData.doc;'+base64data
+				            +'" download="'+defaults.tableName.toString()+'.ppt"><span></span></a>').appendTo(document.body).find('span').trigger("click").parent().remove();
+
 				}else if(defaults.type == 'png'){
 					html2canvas($(el), {
 						onrendered: function(canvas) {										
